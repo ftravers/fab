@@ -24,15 +24,14 @@
    (let [old-match   (:current-route db)
          controllers (rfc/apply-controllers (:controllers old-match) new-match)
          node (subscribe [:node [:block/uid (-> new-match :path-params :id)]])] ;; TODO make the page title query work when zoomed in on a block
-     (set! (.-title js/document) (or (:node/title @node) "Athens Research")) ;; TODO make this side effect explicit
+     (set! (.-title js/document) (or (:node/title @node) "FAB Base")) ;; TODO make this side effect explicit
      (assoc db :current-route (assoc new-match :controllers controllers)))))
 
 ;; router definition
 
 (def routes
   ["/"
-   [""      {:name :home}]
-   ])
+   [""      {:name :home}]])
 
 (def router
   (rfe/router
