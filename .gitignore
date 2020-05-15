@@ -13,7 +13,6 @@
 yarn.lock
 
 # shadow-cljs cache, port files
-/shadow-cljs.edn
 /.shadow-cljs/
 
 # clj-kondo cache
