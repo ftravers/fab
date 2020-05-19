@@ -4,8 +4,7 @@
    [fab.router :as router]
    [fab.views :as views]
    [reagent.dom :as rdom]
-   [re-frame.core :as rf]
-   ))
+   [re-frame.core :as rf]))
 
 (defn dev-setup []
   (when config/debug?

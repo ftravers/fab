@@ -1,7 +1,7 @@
 (ns fab.router
   (:require
    [re-frame.core :refer [subscribe dispatch reg-sub reg-event-fx reg-event-db]]
-   [reitit.coercion.spec :as rss]
+   [reitit.coercion.spec :as rcs]
    [reitit.frontend :as rfe]
    [reitit.frontend.controllers :as rfc]
    [reitit.frontend.easy :as rfee]))
@@ -23,8 +23,8 @@
  (fn [db [_ new-match]]
    (let [old-match   (:current-route db)
          controllers (rfc/apply-controllers (:controllers old-match) new-match)
-         node (subscribe [:node [:block/uid (-> new-match :path-params :id)]])] ;; TODO make the page title query work when zoomed in on a block
-     (set! (.-title js/document) (or (:node/title @node) "FAB Base")) ;; TODO make this side effect explicit
+         node (subscribe [:node [:block/uid (-> new-match :path-params :id)]])] ;; make the page title query work when zoomed in on a block
+     (set! (.-title js/document) (or (:node/title @node) "FAB Base")) ;;  make this side effect explicit
      (assoc db :current-route (assoc new-match :controllers controllers)))))
 
 ;; router definition
@@ -36,7 +36,7 @@
 (def router
   (rfe/router
    routes
-   {:data {:coercion rss/coercion}}))
+   {:data {:coercion rcs/coercion}}))
 
 (defn on-navigate [new-match]
   (when new-match

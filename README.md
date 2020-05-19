@@ -44,7 +44,13 @@ Install the javascript project dependencies:
 Run the development environment:
 ```lein dev```
 
-The `dev` profile  
+To get a clojure repl simply connect to the nrepl server running on port 8777
+
+To get a clojurescript repl connect to a clojure repl and then in the repl run the following command:
+
+```clojurescript
+(shadow.cljs.devtools.api/nrepl-select :app)
+```  
 
 ### Features
 
