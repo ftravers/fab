@@ -77,3 +77,13 @@ dependency management)
     ```sh
     npm install
     ```
+### Architecture
+
+#### Front-End Router
+
+* What is a front-end router?
+
+
+
+* Why do I need one?
+* What features should it have?

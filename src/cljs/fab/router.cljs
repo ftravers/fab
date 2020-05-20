@@ -4,7 +4,9 @@
    [reitit.coercion.spec :as rcs]
    [reitit.frontend :as rfe]
    [reitit.frontend.controllers :as rfc]
-   [reitit.frontend.easy :as rfee]))
+   [reitit.frontend.easy :as rfee]
+   [reitit.dev.pretty :as pretty]
+   ))
 
 ;; subs
 (reg-sub
@@ -36,7 +38,8 @@
 (def router
   (rfe/router
    routes
-   {:data {:coercion rcs/coercion}}))
+   {:data {:coercion rcs/coercion}
+    :exception pretty/exception}))
 
 (defn on-navigate [new-match]
   (when new-match
