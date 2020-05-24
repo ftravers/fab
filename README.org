@@ -1,4 +1,4 @@
-# FAB Re-Frame Starter Project 
+* FAB Re-Frame Starter Project 
 
 [Fenton](https://github.com/ftravers) and [Alex's](https://github.com/aeberts) re-frame starter project.
 
@@ -44,6 +44,9 @@ Install the javascript project dependencies:
 
 Run the development environment:
 ```lein dev```
+
+Wait to see line:
+
 
 To get a clojure repl simply connect to the nrepl server running on port 8777
 
@@ -113,52 +116,101 @@ Unfortunately, the "custom formatter" feature that allows cljs Devtools to work 
 
 _What is a web server?_
 
-Most developers know what a web server is and how it works but bear with me, the discussion below is relevant and Clojure(script) related.
+Most developers know what a web server is and how it works but bear
+with me, the discussion below is relevant and Clojure(script) related.
 
-A web server is designed to store and deliver web pages to browsers (a.k.a. "Clients" or "User Agents") via HTTP. Web servers can refer to the physical hardware that responds to HTTP requests or the software running on a physical server somewhere. While the type of hardware your server is running on is important for performance we're mostly interested in the web server software and how it interacts with you Clojure(script) application.
+A web server is designed to store and deliver web pages to browsers
+(a.k.a. "Clients" or "User Agents") via HTTP. Web servers can refer to
+the physical hardware that responds to HTTP requests or the software
+running on a physical server somewhere. While the type of hardware
+your server is running on is important for performance we're mostly
+interested in the web server software and how it interacts with you
+Clojure(script) application.
 
-Eric Normand did a great write-up of Clojure web servers here: https://purelyfunctional.tv/mini-guide/clojure-web-servers/
+Eric Normand did a great write-up of Clojure web servers here:
+https://purelyfunctional.tv/mini-guide/clojure-web-servers/
 
-Peter Taoussains published some benchmarks of the major clojure web servers here: https://github.com/ptaoussanis/clojure-web-server-benchmarks/tree/master/results  The benchmarks are 5 years old but the results are still interesting and relevant.
+Peter Taoussains published some benchmarks of the major clojure web
+servers here:
+https://github.com/ptaoussanis/clojure-web-server-benchmarks/tree/master/results
+The benchmarks are 5 years old but the results are still interesting
+and relevant.
 
-While not the fastest of java or clojure web servers we chose http-kit for this project because it is simple to use, supports the Ring spec, has limited dependencies and can be extended to support more exotic configurations.
+While not the fastest of java or clojure web servers we chose http-kit
+for this project because it is simple to use, supports the Ring spec,
+has limited dependencies and can be extended to support more exotic
+configurations.
 
 What is this Ring thing and do we need it?
 
-If you are exploring developing web applications in Clojure you will no doubt have run across references to Ring. But what is Ring and why should I care about it? Ring is Clojure web application library which abstracts the details of HTTP into a simple Clojure API. You can think of Ring as more of an interface or specification of the components that are needed for a web application. The full spec is on Github, if you're interested in the details. The benefit of using Ring is that libraries that implement the Ring specification are modular and can all work together. 
+If you are exploring developing web applications in Clojure you will
+no doubt have run across references to Ring. But what is Ring and why
+should I care about it? Ring is Clojure web application library which
+abstracts the details of HTTP into a simple Clojure API. You can think
+of Ring as more of an interface or specification of the components
+that are needed for a web application. The full spec is on Github, if
+you're interested in the details. The benefit of using Ring is that
+libraries that implement the Ring specification are modular and can
+all work together.
 
 Other Web Server Options:
 
 Pedestal/Jetty (http://pedestal.io/index)
 
-Pedestal/Jetty is another great web server option for Clojure apps but we went with http-kit for this project because it's a little simpler to configure out of the box and has fewer dependencies. 
+Pedestal/Jetty is another great web server option for Clojure apps but
+we went with http-kit for this project because it's a little simpler
+to configure out of the box and has fewer dependencies.
 
 #### Application Server
 
-Simple clojure applications do not need a separate application per-se. The clojure code in clj and cljc files is called by handlers from the web server (in our case http-kit) and returns responses to the client via the web server. The clojure application is started by the "traditional" methods i.e. via leiningen. 
+Simple clojure applications do not need a separate application
+per-se. The clojure code in clj and cljc files is called by handlers
+from the web server (in our case http-kit) and returns responses to
+the client via the web server. The clojure application is started by
+the "traditional" methods i.e. via leiningen.
 
 #### System Lifecycle Management : Integrant
 
 What is system lifecycle management? (SLM)
 
-Any client / server system contains multiple components: servers, databases, application servers, etc. Even in small systems, these separate components must be supplied with a particular configuration and started and stopped in a particular order. System lifecycle management libraries are useful to orchestrate the startup and shutdown of these separate compoents.
+Any client / server system contains multiple components: servers,
+databases, application servers, etc. Even in small systems, these
+separate components must be supplied with a particular configuration
+and started and stopped in a particular order. System lifecycle
+management libraries are useful to orchestrate the startup and
+shutdown of these separate compoents.
 
-There are many clojure-based SLM libraries available (Integrant, Component, Mount, Duct, etc.) - what responsibilities do they have and how do they work?
+There are many clojure-based SLM libraries available (Integrant,
+Component, Mount, Duct, etc.) - what responsibilities do they have and
+how do they work?
      
 (TBC)
      
 Why did we choose Integrant?
   * Regularly maintained
   * Declarative and data-driven
-  * Dependencies are resolved from the configuration before the system is initialized 
+  * Dependencies are resolved from the configuration before the system
+    is initialized
 
 #### Back-End Router: Reitit (TBC)
 
 _What is a back-end router?_
 
-A back-end router is part of your application server and is the component that decides how to respond to web requests received from a client (for example the the client application running in a browser). Back-end routers can respond to simple "static" routes which respond to urls that have no additional details (e.g. "http://yoursite.com/home") or more complicated "dynamic" routes where details are provided (e.g. "http://yoursite.com/users/42"). Back in the "old days" of the internet when web pages were mostly rendered on the server, back-end routers translated inbound web requests into application logic, fetched whatever data was required, filled in HTML templates with the data and returned the response to the client browser to be displayed. 
+A back-end router is part of your application server and is the
+component that decides how to respond to web requests received from a
+client (for example the the client application running in a
+browser). Back-end routers can respond to simple "static" routes which
+respond to urls that have no additional details
+(e.g. "http://yoursite.com/home") or more complicated "dynamic" routes
+where details are provided (e.g. "http://yoursite.com/users/42"). Back
+in the "old days" of the internet when web pages were mostly rendered
+on the server, back-end routers translated inbound web requests into
+application logic, fetched whatever data was required, filled in HTML
+templates with the data and returned the response to the client
+browser to be displayed.
 
-As web applications became more interactive, more of the work for rendering the client UI was done in the client browser. 
+As web applications became more interactive, more of the work for
+rendering the client UI was done in the client browser.
 
 Why do I need a back-end router?
 
@@ -216,3 +268,79 @@ A front-end router is responsible for:
 
 #### Testing
 
+
+* Meeting: May 24, 2020
+
+** Agenda
+    
+*** DONE AE to demo reitit
+
+*** DONE FT Share AERO config, secrets.edn for storing passwords etc...
+
+** Meeting Minutes
+
+*** TODO AE find out what dev-after-load (reagent thing)
+
+*** TODO AE shadow-cljs command to build production 
+   (for integration with heroku deployment)
+
+   Target: must be able to create a *.js file somewhere (advanced
+   compilation?), so can be served up in production.
+
+*** TODO AE setup local-prod
+ We have three envs (at least): dev, local-prod, deploy-prod (remote, real)
+
+*** TODO AE get tracing working for production, stubs.
+
+*** TODO FT checkout logging with transducers for application
+ where they keep the last 3 states, for a function call.
+
+*** TODO AE make links/nav work with reitit
+have a link on home page to another page, and back again.
+
+*** TODO AE Fix bad navigation does 404 or something...
+
+*** TODO AE coercion is breaking page??
+(ns fab.router
+   [reitit.coercion.spec :as rcs]
+
+*** TODO Get history (back/forward) buttons working push state
+use-fragment = false...
+
+*** TODO AE there is a circular reference problem with main-page view
+
+*** TODO FT Get shadow FE working with Cider.
+
+#+BEGIN_SRC clojure
+(ns fab.router
+...
+   {:use-fragment true}))
+#+END_SRC
+
+** Discussions
+
+*** Web Server
+AE likes http-kit.  FT heard rumors about it...
+options: http-kit.  
+
+http-kit: pure clojure solution, supports WebSockets.
+pedestal: batteries included (framework-y), too heavyweight.
+ring-jetty: doesn't support WebSockets out-of-the-box.
+
+*** BE Routing
+compojure maybe doesn't support WebSockets.  but reitit seems better
+and works FE/BE.
+
+** Decisions
+*** Web Server: 
+try to move towards http-kit.
+
+** Future Agenda Items
+*** A testing story FE&BE.
+*** bring together shadow & heroku
+Integrate everything that we have ATM.
+**** TODO FE get cider working with shadow
+*** FE/BE ??? Authentication
+    
+*** Testing FE/BE
+*** 
