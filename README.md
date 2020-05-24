@@ -83,12 +83,33 @@ dependency management)
 What follows is a detailed explanation of each component of the system. The goal is to provide enough information so that a beginner web developer can understand the responsibilities of each component in this system and be able to swap them out with libraries of their own choosing if necessary.
 
 The tech stack below was chosen based on the following criteria:
-  * Modern (bleeding edge?) technologies and protocols which may mean that it is not supported by all browsers
+  * Support for modern (bleeding edge?) technologies and protocols (which may mean that it is not supported by all browsers)
   * Clojure and Java-centric choices (i.e. choose good Clojure(script) options when available e.g. Transit vs JSON)
-  * Data-oriented / declarative options. Where possible use options that are declarative in nature.
-  * Use simple, modular components where possible to ease re-use and substitution where necessary.
+  * Where possible prefer options that are data-oriented and declarative in nature (i.e. "say what should be done" vs. "do what I say")
+  * Use simple, modular components where possible to make substitution of modules easier
+  * Use components that favour ease of use over performance (i.e. ones that don't require extensive configuration and work OOTB) 
 
-#### Web Server: (Technology TBD)
+#### Build Tools
+
+Leiningen
+
+shadow-cljs
+
+shadow-cljs allows easy use of javascript libraries without having to provide "externs" files. The primary maintainer of shadow-cljs Tomas Heller (@thheller) is very active in maintaining shadow-cljs and pushes useful new features regularly. 
+
+Other development benefits of shadow-cljs are:
+  * hot code reloading
+  * cljs inspectors
+  
+BinaryAge cljs-devtools : https://github.com/binaryage/cljs-devtools
+  * cljs-devtools provides some enhancements for cljs developers using Chrome:
+    * Better formatting of cljs values in Chrome's DevTools console
+    * More informative exceptions
+    * Long stack traces of async calls
+    
+Unfortunately, the "custom formatter" feature that allows cljs Devtools to work is deprecated in future versions of Chrome and so the primary feature of cljs-devtools may not work in the medium term. There's no good alternative or workaround that we know of at present.     
+
+#### Web Server: HTTP-Kit
 
 _What is a web server?_
 
@@ -100,13 +121,36 @@ Eric Normand did a great write-up of Clojure web servers here: https://purelyfun
 
 Peter Taoussains published some benchmarks of the major clojure web servers here: https://github.com/ptaoussanis/clojure-web-server-benchmarks/tree/master/results  The benchmarks are 5 years old but the results are still interesting and relevant.
 
-What is Ring and do we need it?
+While not the fastest of java or clojure web servers we chose http-kit for this project because it is simple to use, supports the Ring spec, has limited dependencies and can be extended to support more exotic configurations.
 
-If you are exploring developing web applications in Clojure you will no doubt have run across references to Ring. But what is Ring and why should I care about it? Ring is Clojure web application library which abstracts the details of HTTP into a simple Clojure API. You can think of Ring as more of an interface or specification of the components that are needed for a web application. The full spec is on Github, if you're interested in reading the Ring Spec in more detail. The benefit of using Ring is that libraries that implement the Ring specification are modular and can all work together.  
+What is this Ring thing and do we need it?
 
-What about Compojure? (TBD)
+If you are exploring developing web applications in Clojure you will no doubt have run across references to Ring. But what is Ring and why should I care about it? Ring is Clojure web application library which abstracts the details of HTTP into a simple Clojure API. You can think of Ring as more of an interface or specification of the components that are needed for a web application. The full spec is on Github, if you're interested in the details. The benefit of using Ring is that libraries that implement the Ring specification are modular and can all work together. 
 
-#### Application Server 
+Other Web Server Options:
+
+Pedestal/Jetty (http://pedestal.io/index)
+
+Pedestal/Jetty is another great web server option for Clojure apps but we went with http-kit for this project because it's a little simpler to configure out of the box and has fewer dependencies. 
+
+#### Application Server
+
+Simple clojure applications do not need a separate application per-se. The clojure code in clj and cljc files is called by handlers from the web server (in our case http-kit) and returns responses to the client via the web server. The clojure application is started by the "traditional" methods i.e. via leiningen. 
+
+#### System Lifecycle Management : Integrant
+
+What is system lifecycle management? (SLM)
+
+Any client / server system contains multiple components: servers, databases, application servers, etc. Even in small systems, these separate components must be supplied with a particular configuration and started and stopped in a particular order. System lifecycle management libraries are useful to orchestrate the startup and shutdown of these separate compoents.
+
+There are many clojure-based SLM libraries available (Integrant, Component, Mount, Duct, etc.) - what responsibilities do they have and how do they work?
+     
+(TBC)
+     
+Why did we choose Integrant?
+  * Regularly maintained
+  * Declarative and data-driven
+  * Dependencies are resolved from the configuration before the system is initialized 
 
 #### Back-End Router: Reitit (TBC)
 
@@ -124,6 +168,24 @@ Why do I need a back-end router?
 
 * Why did we choose reitit as our back-end routing library?
 
+* What other options are there?
+
+Compojure : https://github.com/weavejester/compojure
+
+"A small routing library for Ring"
+
+Secretary
+
+Bidi
+
+Clerk
+
+Accountant
+
+#### Back-End Database: Datomic 
+
+(TBD)
+
 #### Front-End Router: Reitit (TBC)
 
 _What is a front-end router?_
@@ -140,3 +202,17 @@ A front-end router is responsible for:
 * What are the "nice to have" features?
 
 * Why did we choose reitit as our front-end routing library?
+
+* What is HTML5 pushState?
+
+#### Front-End UI Framework : Re-frame
+
+
+#### Deployment : Heroku
+
+  * Push to git repo on Heroku and you're done. 
+  * Free tier available
+  * Supports custom domains
+
+#### Testing
+

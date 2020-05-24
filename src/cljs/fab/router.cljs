@@ -1,12 +1,13 @@
 (ns fab.router
   (:require
-   [re-frame.core :refer [subscribe dispatch reg-sub reg-event-fx reg-event-db]]
+   [re-frame.core :refer [subscribe dispatch reg-sub reg-event-fx reg-event-db reg-fx]]
    [reitit.coercion.spec :as rcs]
    [reitit.frontend :as rfe]
+   [reitit.frontend.history :as rfeh]
    [reitit.frontend.controllers :as rfc]
    [reitit.frontend.easy :as rfee]
-   [reitit.dev.pretty :as pretty]
-   ))
+   [reitit.dev.pretty :as rpretty]
+   [fab.views :as views]))
 
 ;; subs
 (reg-sub
@@ -20,26 +21,34 @@
  (fn [_ [_ & route]]
    {:navigate! route}))
 
+;; Triggering navigation from events.
+(reg-fx
+ :navigate!
+ (fn [route]
+   (apply rfeh/push-state route)))
+
 (reg-event-db
  :navigated
  (fn [db [_ new-match]]
    (let [old-match   (:current-route db)
-         controllers (rfc/apply-controllers (:controllers old-match) new-match)
-         node (subscribe [:node [:block/uid (-> new-match :path-params :id)]])] ;; make the page title query work when zoomed in on a block
-     (set! (.-title js/document) (or (:node/title @node) "FAB Base")) ;;  make this side effect explicit
+         controllers (rfc/apply-controllers (:controllers old-match) new-match)]
      (assoc db :current-route (assoc new-match :controllers controllers)))))
 
 ;; router definition
 
 (def routes
-  ["/"
-   [""      {:name :home}]])
+  [["/"
+    {:name :main-page
+     :view views/welcome}]])
+
+(comment
+ routes
+ router)
 
 (def router
   (rfe/router
    routes
-   {:data {:coercion rcs/coercion}
-    :exception pretty/exception}))
+   {:exception rpretty/exception}))
 
 (defn on-navigate [new-match]
   (when new-match
@@ -50,4 +59,8 @@
   (rfee/start!
    router
    on-navigate
+   ;; set {:use-fragment} to false to enable reitit HistoryAPI
+   ;; reitit push-state changes the route
+   ;; reitit replace-state change route without leaving previous entry in the browser
+   ;; https://metosin.github.io/reitit/frontend/browser.html
    {:use-fragment true}))

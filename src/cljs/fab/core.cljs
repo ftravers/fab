@@ -4,7 +4,8 @@
    [fab.router :as router]
    [fab.views :as views]
    [reagent.dom :as rdom]
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   [fab.db :as db]))
 
 (defn dev-setup []
   (when config/debug?
@@ -13,10 +14,10 @@
 (defn ^:dev/after-load mount-root []
   (rf/clear-subscription-cache!)
   (router/init-routes!)
-  (rdom/render [views/main-panel]
+  (rdom/render [views/main-page]
             (.getElementById js/document "app")))
 
 (defn init []
-  (rf/dispatch-sync [:init-rfdb])
+  (rf/dispatch-sync [:initialize-db])
   (dev-setup)
   (mount-root))
