@@ -14,7 +14,7 @@
 (defn ^:dev/after-load mount-root []
   (rf/clear-subscription-cache!)
   (router/init-routes!)
-  (rdom/render [views/main-page]
+  (rdom/render [views/welcome]
             (.getElementById js/document "app")))
 
 (defn init []
