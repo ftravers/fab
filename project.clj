@@ -1,4 +1,3 @@
-  
 (defproject fab "0.1.0-SNAPSHOT"
 
   :description "FAB: Fenton and Alex's Base Template"
