@@ -303,14 +303,7 @@ What is HTML5 pushState?
 
 (TBD)
 
-* Meeting: May 24, 2020
-
-** Agenda
-*** DONE AE to demo reitit
-
-*** DONE FT Share AERO config, secrets.edn for storing passwords etc...
-
-** Meeting Minutes
+* Todo's
 
 *** TODO AE find out what dev-after-load (reagent thing)
 
@@ -350,6 +343,13 @@ use-fragment = false...
    {:use-fragment true}))
 #+END_SRC
 
+* Meeting: May 24, 2020
+** Agenda
+*** DONE AE to demo reitit
+
+*** DONE FT Share AERO config, secrets.edn for storing passwords etc...
+
+** Meeting Minutes
 ** Discussions
 
 *** Web Server
