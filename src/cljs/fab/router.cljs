@@ -1,7 +1,6 @@
 (ns fab.router
   (:require
    [re-frame.core :refer [subscribe dispatch reg-sub reg-event-fx reg-event-db reg-fx]]
-   [reitit.coercion.spec :as rcs]
    [reitit.frontend :as rfe]
    [reitit.frontend.history :as rfeh]
    [reitit.frontend.controllers :as rfc]
@@ -40,10 +39,6 @@
   [["/"
     {:name :main-page
      :view views/welcome}]])
-
-(comment
- routes
- router)
 
 (def router
   (rfe/router
