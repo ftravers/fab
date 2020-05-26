@@ -136,7 +136,7 @@ Other development benefits of shadow-cljs are:
 
 ** Web Server: HTTP-Kit
 
-*** What is a web server?
+*** What is a Web server?
 
 Most developers know what a web server is and how it works but bear
 with me, the discussion below is relevant and Clojure(script) related.
@@ -305,7 +305,21 @@ What is HTML5 pushState?
 
 * Todo's
 
-*** TODO AE find out what dev-after-load (reagent thing)
+*** DONE AE find out what dev-after-load (reagent thing)
+
+`after-load` is a shadow-cljs lifecycle hook which tells shadow-cljs to load a function before or after hot-code loading.
+
+`before-load` ensures that the function loads before hot-code reload and `after-load` loads the function after.
+
+#+BEGIN_SRC clojure
+
+(defn ^:dev/before-load stop []
+  (js/console.log "stop"))
+
+(defn ^:dev/after-load start []
+  (js/console.log "start"))
+
+#+END_SRC
 
 *** TODO AE shadow-cljs command to build production 
    (for integration with heroku deployment)
@@ -343,6 +357,12 @@ use-fragment = false...
    {:use-fragment true}))
 #+END_SRC
 
+* Meeting: May 26, 2020
+** Agenda
+*** Check in ShadowCLJS and FT to test on his side
+** Discussion:
+*** Issue Tracking
+- Consider putting bugs into Github issue tracker at some point.
 * Meeting: May 24, 2020
 ** Agenda
 *** DONE AE to demo reitit
@@ -380,6 +400,3 @@ Integrate everything that we have ATM.
 *** FE/BE ??? Authentication
     
 *** Testing FE/BE
-
-some trivial change.
-Some other trivial commit.
