@@ -26,7 +26,7 @@
                 :dev {:compiler-options
                       {:closure-defines {"re_frame.trace.trace_enabled_QMARK_" true
                                          "day8.re_frame.tracing.trace_enabled_QMARK_"  true}}}
-                :devtools {:preloads []
+                :devtools {:preloads [day8.re-frame-10x.preload]
                            :repl-pprint true
                            :http-root "resources/public"
                            :http-port 3000
