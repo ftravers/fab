@@ -6,7 +6,7 @@
           :nav {:active-page :home
                 :active-nav :home
                 :active-modal nil}
-          :current-route :home
+          :current-route nil
           :loading true
           :errors {}
           :users {"barny@mailinator.com" {:uid "barney@mailinator.com"

@@ -14,8 +14,8 @@
 (defn ^:dev/after-load mount-root []
   (rf/clear-subscription-cache!)
   (router/init-routes!)
-  (rdom/render [views/welcome]
-            (.getElementById js/document "app")))
+  (rdom/render [views/router-component {:router router/router}]
+               (.getElementById js/document "app")))
 
 (defn init []
   (rf/dispatch-sync [:initialize-db])
