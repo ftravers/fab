@@ -8,7 +8,9 @@
    [reitit.frontend.easy :as rfee]
    [reitit.dev.pretty :as rpretty]
    [fab.views :as views]
-   [reitit.core :as r]))
+   [reitit.core :as r]
+   [day8.re-frame.tracing :refer-macros [fn-traced]]
+   ))
 
 ;; subs
 (reg-sub
@@ -24,7 +26,7 @@
 
 (reg-event-db
  :navigated
- (fn [db [_ new-match]]
+ (fn-traced [db [_ new-match]]
    (let [old-match   (:current-route db)
          controllers (rfc/apply-controllers (:controllers old-match) new-match)]
      (assoc db :current-route (assoc new-match :controllers controllers)))))
@@ -32,7 +34,7 @@
 ;; Triggering navigation from events.
 (reg-fx
  :navigate!
- (fn [route]
+ (fn-traced [route]
    (apply rfee/push-state route)))
 
 ;; Routes
@@ -48,7 +50,7 @@
        :stop (fn [& params] (js/console.log "Leaving home page"))}]}]
    ["sub-page1"
     {:name :sub-page1
-     :views views/sub-page1
+     :view views/sub-page1
      :link-text "Sub-page 1"
      :controllers
      [{:start (fn [& params] (js/console.log "Entering sub-page1"))
@@ -64,6 +66,7 @@
     (dispatch [:navigated new-match])))
 
 (defn init-routes! []
+  "Creates reitit router and initializes routes"
   (prn "Initializing routes")
   (rfee/start!
    router
@@ -73,3 +76,5 @@
    ;; reitit replace-state change route without leaving previous entry in the browser
    ;; https://metosin.github.io/reitit/frontend/browser.html
    {:use-fragment false}))
+
+;; testing surrounding

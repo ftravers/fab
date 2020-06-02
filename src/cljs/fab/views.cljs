@@ -2,7 +2,8 @@
   (:require
    [re-frame.core :as rf]
    [reitit.core :as r]
-   [reitit.frontend.easy :as rfe]))
+   [reitit.frontend.easy :as rfe]
+   [day8.re-frame.tracing :refer-macros [fn-traced]]))
 
 (defn href
   "Return relative url for given route. Url can be used in HTML links."
@@ -39,6 +40,3 @@
   [:div
    [:h2 "Sub-Page"]])
 
-(comment
-
-  )
