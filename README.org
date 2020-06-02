@@ -112,7 +112,7 @@ The tech stack below was chosen based on the following criteria:
   * Use simple, modular components where possible to make substitution of
     modules easier
   * Use components that favour ease of use over performance (i.e. ones that
-    don't require extensive configuration and work OOTB)
+    don't require extensive configuration and work ADOBE)
 
 <add architecture diagram>
 
@@ -128,7 +128,7 @@ Other development benefits of shadow-cljs are:
   * hot code reloading
   * cljs inspectors
   
-*** BinaryAge cljs-devtools : https://github.com/binaryage/cljs-devtools
+*** Binary-Age cljs-devtools : https://github.com/binaryage/cljs-devtools
 - cljs-devtools provides some enhancements for cljs developers using Chrome:
 - Better formatting of cljs values in Chrome's DevTools console
 - More informative exceptions
@@ -304,7 +304,6 @@ What is HTML5 pushState?
 (TBD)
 
 * Todo's
-
 *** DONE AE find out what dev-after-load (reagent thing)
 
 `after-load` is a shadow-cljs lifecycle hook which tells shadow-cljs to load a function before or after hot-code loading.
@@ -321,35 +320,11 @@ What is HTML5 pushState?
 
 #+END_SRC
 
-*** TODO AE shadow-cljs command to build production 
-   (for integration with heroku deployment)
-
-   Target: must be able to create a *.js file somewhere (advanced
-   compilation?), so can be served up in production.
-
-*** TODO AE setup local-prod
- We have three envs (at least): dev, local-prod, deploy-prod (remote, real)
-
-*** TODO AE get tracing working for production, stubs.
-
-*** TODO FT checkout logging with transducers for application
- where they keep the last 3 states, for a function call.
-
-*** TODO AE make links/nav work with reitit
-have a link on home page to another page, and back again.
-
-*** TODO AE Fix bad navigation does 404 or something...
-
-*** TODO AE coercion is breaking page??
-(ns fab.router
-   [reitit.coercion.spec :as rcs]
-
-*** TODO Get history (back/forward) buttons working push state
-use-fragment = false...
-
-*** TODO AE there is a circular reference problem with main-page view
+*** TODO AE there is a circular reference problem with main-page view?
 
 *** TODO FT Get shadow FE working with Cider.
+
+Works on Alex's machine to test on Fenton's machine
 
 #+BEGIN_SRC clojure
 (ns fab.router
@@ -357,9 +332,40 @@ use-fragment = false...
    {:use-fragment true}))
 #+END_SRC
 
+*** TODO AE make links/nav work with reitit
+have a link on home page to another page, and back again.
+
+*** TODO AE Get history (back/forward) buttons working push state
+use-fragment = false...
+
+*** TODO AE shadow-cljs command to build production
+   (for integration with heroku deployment)
+
+   Target: must be able to create a *.js file somewhere (advanced
+   compilation?), so can be served up in production.
+
+*** TODO AE get tracing working for production, stubs.
+
+*** TODO AE setup local-prod
+ We have three envs (at least): dev, local-prod, deploy-prod (remote, real)
+
+*** TODO FT checkout logging with transducers for application
+ where they keep the last 3 states, for a function call.
+
+*** TODO AE Fix bad navigation does 404 or something...
+
+Not sure what the issue is here...
+
+*** DONE AE coercion is breaking page??
+(ns fab.router
+  [reitit.coercion.spec :as rcs]
+
+  Removed and page still works
+
 * Meeting: May 26, 2020
 ** Agenda
-*** Check in ShadowCLJS and FT to test on his side
+*** DONE Check in ShadowCLJS and FT to test on his side
+
 ** Discussion:
 *** Issue Tracking
 - Consider putting bugs into Github issue tracker at some point.
@@ -371,7 +377,6 @@ use-fragment = false...
 
 ** Meeting Minutes
 ** Discussions
-
 *** Web Server
 AE likes http-kit.  FT heard rumors about it...
 options: http-kit.  
@@ -381,22 +386,18 @@ Decision: Stick with Ring/Jetty until more of the base is solidified.
 http-kit: pure clojure solution, supports WebSockets.
 pedestal: batteries included (framework-y), too heavyweight.
 ring-jetty: doesn't support WebSockets out-of-the-box.
-
 *** BE Routing
 Compojure maybe but doesn't support WebSockets.
 Reitit seems better and works FE/BE. Mostly setup for FE.
 
-Decision: Stick with Reitit
-
+Decision: Stick with Reitit for now
 ** Decisions
 *** Web Server: 
 Stick with Ring/Jetty but try to move towards http-kit.
-
 ** Future Agenda Items
 *** A testing story FE&BE.
 *** bring together shadow & heroku
 Integrate everything that we have ATM.
 **** TODO FE get cider working with shadow
 *** FE/BE ??? Authentication
-    
 *** Testing FE/BE
