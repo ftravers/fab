@@ -33,4 +33,5 @@
                            :repl-init-ns fab.core}}
           :karma-test {:target :karma
                        :ns-regexp "-test$"
-                       :output-to "target/karma-test.js"}}}
+                       :output-to "target/karma-test.js"}}
+ :open-file-command ["idea" :pwd "--line" :line :file]}

@@ -1,12 +1,16 @@
 (ns fab.router
   (:require
-   [re-frame.core :refer [subscribe dispatch reg-sub reg-event-fx reg-event-db reg-fx]]
+   [re-frame.core :refer [dispatch subscribe reg-sub reg-event-fx reg-event-db reg-fx]]
    [reitit.frontend :as rfe]
    [reitit.frontend.history :as rfeh]
    [reitit.frontend.controllers :as rfc]
+   [reitit.coercion.spec :as rss]
    [reitit.frontend.easy :as rfee]
    [reitit.dev.pretty :as rpretty]
-   [fab.views :as views]))
+   [fab.views :as views]
+   [reitit.core :as r]
+   [day8.re-frame.tracing :refer-macros [fn-traced]]
+   ))
 
 ;; subs
 (reg-sub
@@ -17,28 +21,40 @@
 ;; events
 (reg-event-fx
  :navigate
- (fn [_ [_ & route]]
+ (fn [db [_ & route]]
    {:navigate! route}))
-
-;; Triggering navigation from events.
-(reg-fx
- :navigate!
- (fn [route]
-   (apply rfeh/push-state route)))
 
 (reg-event-db
  :navigated
- (fn [db [_ new-match]]
+ (fn-traced [db [_ new-match]]
    (let [old-match   (:current-route db)
          controllers (rfc/apply-controllers (:controllers old-match) new-match)]
      (assoc db :current-route (assoc new-match :controllers controllers)))))
 
-;; router definition
+;; Triggering navigation from events.
+(reg-fx
+ :navigate!
+ (fn-traced [route]
+   (apply rfee/push-state route)))
+
+;; Routes
 
 (def routes
-  [["/"
-    {:name :main-page
-     :view views/welcome}]])
+  ["/"
+   [""
+    {:name :home
+     :view views/home-page
+     :link-text "Home"
+     :controllers
+     [{:start (fn [& params] (js/console.log "Entering home page"))
+       :stop (fn [& params] (js/console.log "Leaving home page"))}]}]
+   ["sub-page1"
+    {:name :sub-page1
+     :view views/sub-page1
+     :link-text "Sub-page 1"
+     :controllers
+     [{:start (fn [& params] (js/console.log "Entering sub-page1"))
+       :stop (fn [& params] (js/console.log "Leaving sub-page1"))}]}]])
 
 (def router
   (rfe/router
@@ -50,6 +66,7 @@
     (dispatch [:navigated new-match])))
 
 (defn init-routes! []
+  "Creates reitit router and initializes routes"
   (prn "Initializing routes")
   (rfee/start!
    router
@@ -58,4 +75,6 @@
    ;; reitit push-state changes the route
    ;; reitit replace-state change route without leaving previous entry in the browser
    ;; https://metosin.github.io/reitit/frontend/browser.html
-   {:use-fragment true}))
+   {:use-fragment false}))
+
+;; testing surrounding
