@@ -9,8 +9,8 @@
    [reitit.dev.pretty :as rpretty]
    [fab.views :as views]
    [reitit.core :as r]
-   [day8.re-frame.tracing :refer-macros [fn-traced]]
-   ))
+   [day8.re-frame.tracing :refer-macros [fn-traced]]))
+
 
 ;; subs
 (reg-sub
@@ -65,8 +65,9 @@
   (when new-match
     (dispatch [:navigated new-match])))
 
-(defn init-routes! []
+(defn init-routes!
   "Creates reitit router and initializes routes"
+  []
   (prn "Initializing routes")
   (rfee/start!
    router
