@@ -47,8 +47,10 @@ Install the dependencies in <a href="#environment-setup">environment setup</a>
 Install the javascript project dependencies:
 ```npm install```
 
+Install the shadow-cljs cli
+
 Run the development environment:
-```lein dev```
+```shadow-cljs watch app```
 
 Wait to see the line:
 `[:app] Build completed.`
@@ -320,9 +322,9 @@ What is HTML5 pushState?
 
 #+END_SRC
 
-*** TODO AE there is a circular reference problem with main-page view?
+*** DONE AE there is a circular reference problem with main-page view?
 
-*** TODO FT Get shadow FE working with Cider.
+*** DONE FT Get shadow FE working with Cider.
 
 Works on Alex's machine to test on Fenton's machine
 
@@ -332,27 +334,26 @@ Works on Alex's machine to test on Fenton's machine
    {:use-fragment true}))
 #+END_SRC
 
-*** TODO AE make links/nav work with reitit
+*** DONE AE make links/nav work with reitit
 have a link on home page to another page, and back again.
 
 *** TODO AE Get history (back/forward) buttons working push state
 use-fragment = false...
 
 *** TODO AE shadow-cljs command to build production
-   (for integration with heroku deployment)
+(for integration with heroku deployment)
 
-   Target: must be able to create a *.js file somewhere (advanced
-   compilation?), so can be served up in production.
+Target: must be able to create a *.js file somewhere (advanced
+compilation?), so can be served up in production.
 
 *** TODO AE get tracing working for production, stubs.
-
 *** TODO AE setup local-prod
- We have three envs (at least): dev, local-prod, deploy-prod (remote, real)
+We have three envs (at least): dev, local-prod, deploy-prod (remote, real)
 
 *** TODO FT checkout logging with transducers for application
  where they keep the last 3 states, for a function call.
 
-*** TODO AE Fix bad navigation does 404 or something...
+*** KILL AE Fix bad navigation does 404 or something...
 
 Not sure what the issue is here...
 

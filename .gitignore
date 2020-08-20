@@ -21,3 +21,4 @@ yarn.lock
 # Intellij stuff
 .idea
 *.iml
+package-lock.json
