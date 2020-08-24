@@ -8,6 +8,6 @@
         rum {:mvn/version "0.11.3"}}
  :aliases
  {:dev {:extra-paths ["test"]
-        :extra-deps
-        {com.bhauman/figwheel-main {:mvn/version "0.2.0"}}}
+        :extra-deps {com.bhauman/figwheel-main {:mvn/version "0.2.4"}}}
   :fig {:main-opts ["-m" "figwheel.main"]}}}
+

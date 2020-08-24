@@ -21,3 +21,6 @@
   (rf/dispatch-sync [:initialize-db])
   (dev-setup)
   (mount-root))
+
+(defn -main []
+  (init))

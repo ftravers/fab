@@ -34,7 +34,7 @@
 
 (defn home-page []
   [:div
-   [:h1 "Home Pagee"]])
+   [:h1 "Home Pag"]])
 
 (defn sub-page1 []
   [:div

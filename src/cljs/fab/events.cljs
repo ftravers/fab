@@ -6,5 +6,4 @@
 
 (reg-event-db
  :init-rfdb
- (fn-traced [_ _]
-            db/rfdb))
+ (fn-traced [_ _] db/rfdb))
